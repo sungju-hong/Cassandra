@@ -1,0 +1,30 @@
+1. write perf vs read flex
+ - key_cache_size_in_mb
+ - set key cache: 100 and row cache: 0
+ - $ bin/nodetool --host 127.0.0.1 setcachecapacity -- 100 0
+
+2. cassandra's read operations are slower than writes.
+ - If a row is frequently updated, it may be spread across several SSTables, increasing the latency of the read.
+ - need compaction.
+
+3. level-tiered compaction
+ - more I/O intensive.
+ - it ensures that most of the time a read can be satisfied by a single SSTable.
+ - less disk overhead.
+ 
+4. completed compaction tasks and pending compaction tasks
+
+5. Load
+ - alert an unbalanced cluster.
+ 
+6. ParNew count vs CMS count
+ - ParNew: Number of young-generation collections
+ - ParNew time: Elapsed time of young-generation collections, in milliseconds
+ - ConcurrentMarkSweep count: Number of old-generation collections
+ - ConcurrentMarkSweep time: Elapsed time of old-generation collections, in milliseconds
+ 
+7. Exceptions, Timeout, Unavailable, Pending Tasks, Currently Blocked Tasks.
+ - Timeout exception: the coordinator will store the update and attempt to apply it later.
+ - read_request_timeout_in_ms (defaults to 5,000 milliseconds), write_request_timeout_in_ms (defaults to 2,000 ms)
+ - Unavailable exception: unable to meet the consistency requirements
+ - Queue -> threads take -> pending tasks -> currently blocked
