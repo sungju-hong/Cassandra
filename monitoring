@@ -1,5 +1,15 @@
 http://www.datastax.com/dev/blog/metrics-in-cassandra12
 
-1. jmx
+1. Jmx
  - jmx client(remote) -> jmx agent(local) -> MBeans/MXBeans(local)
+
+2. CollectD
+ - CollectD -> Graphite -> Grafana
+ https://blog.raintank.io/collectd-and-cassandra-2-2/
+
+3. Oracle Jmx
+ - http://docs.oracle.com/javase/tutorial/jmx/remote/custom.html
+
+3. Grafana
+ - https://www.pythian.com/blog/monitoring-cassandra-grafana-influx-db/
  
