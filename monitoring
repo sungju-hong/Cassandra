@@ -1,0 +1,5 @@
+http://www.datastax.com/dev/blog/metrics-in-cassandra12
+
+1. jmx
+ - jmx client(remote) -> jmx agent(local) -> MBeans/MXBeans(local)
+ 
