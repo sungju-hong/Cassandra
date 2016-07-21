@@ -28,3 +28,26 @@
  - read_request_timeout_in_ms (defaults to 5,000 milliseconds), write_request_timeout_in_ms (defaults to 2,000 ms)
  - Unavailable exception: unable to meet the consistency requirements
  - Queue -> threads take -> pending tasks -> currently blocked
+ 
+ 8. Cassandra@ebay
+  - We isolate clusters by functional area and criticality. Use cases with similar criticality from the same functional area share the same cluster, but reside in different keyspaces.
+  - Forget RDBMS
+  - SortedMap<RowKey, SortedMap<ColumnKey, ColumnValue>> : outer map + inner map
+  - Map<RowKey, SortedMap<ColumnKey, ColumnValue>> if not using Order Preserving Partitioner (OOP)
+  - Map<RowKey, SortedMap<SuperColumnKey, SortedMap<ColumnKey, ColumnValue>>> if using super column
+  - Valueless column
+  - Super Column: lack of performance concerns and the lack of support for secondary indexes. The same “super column like” functionality (or even better) can be achieved by using composite columns.
+  - Identify queries: frequent, critical(sensitive to latency)
+  - Batch read will help only by avoiding the round trip — which is good, so you should always try to leverage it.
+  - We can show all the item titles that a user likes and pull additional information only when the user asks for it (by clicking on a title).
+  - Data model
+   Option 1: Exact replica of relational model
+   Option 2: Normalized entities with custom indexes
+   Option 3: Normalized entities with de-normalization into custom indexes
+   Option 4: Partially de-normalized entities
+  - Almost all the time, you should favor composite columns over Super Column.
+  - timeuuid and userid together form a composite column key in User_By_Item and Item_By_User column families
+  
+   
+
+  
